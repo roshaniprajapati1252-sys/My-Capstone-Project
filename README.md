@@ -4,7 +4,8 @@ Brief description of what this project does and why it exists.
 
 ## Stack
 - Node.js (LTS)
-- (add your frameworks/tools here as you build)
+
+
 
 ## Prerequisites
 
