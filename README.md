@@ -16,15 +16,15 @@ Brief description of what this project does and why it exists.
 
 From the project root, install dependencies:
 
-```bash
+bash
 npm install
-```
+
 
 Run the test script (placeholder until a test runner is configured):
 
-```bash
+bash
 npm test
-```
+
 
 ## Status
 🚧 In progress — built as part of an AI-assisted development capstone.
