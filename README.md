@@ -26,5 +26,4 @@ bash
 npm test
 
 
-## Status
-🚧 In progress — built as part of an AI-assisted development capstone.
+
