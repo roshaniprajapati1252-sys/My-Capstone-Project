@@ -1,4 +1,4 @@
-HEAD
+
 # OUTPUT. — Personal Agent (FE-06 Capstone)
 
 A streaming AI chat interface built with Next.js, the Vercel AI SDK, and OpenRouter, wrapped in a six-screen shell for a future personal Google Workspace + Telegram agent.
