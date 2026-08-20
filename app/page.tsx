@@ -1,4 +1,13 @@
-﻿import ChatInterface from "@/components/chat/ChatInterface";
+﻿import dynamic from "next/dynamic";
+
+const ChatInterface = dynamic(() => import("@/components/chat/ChatInterface"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full items-center justify-center text-[#EDEFF3]/50">
+      Loading assistant…
+    </div>
+  ),
+});
 
 export default function DashboardPage() {
   return (
