@@ -15,6 +15,8 @@
     "@ai-sdk/anthropic": "^4.0.38",
     "@ai-sdk/react": "^4.0.67",
     "@openrouter/ai-sdk-provider": "^3.0.0",
+    "framer-motion": "^12.0.0",
+    "lucide-react": "^0.469.0",
     "ai": "^7.0.64",
     "next": "^16.3.0",
     "react": "^19.2.8",

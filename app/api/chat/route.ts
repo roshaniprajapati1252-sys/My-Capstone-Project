@@ -7,17 +7,24 @@
  *
  * Client (components/chat/ChatInterface.tsx) POSTs { messages } here via
  * useChat's built-in transport and reads back an SSE stream of UI message
- * chunks (text deltas, start/finish events, etc). We never handle the raw
- * SSE framing ourselves — toUIMessageStreamResponse() does that.
+ * chunks (text deltas, start/finish events, tool call/result events, etc).
+ * We never handle the raw SSE framing ourselves — toUIMessageStreamResponse()
+ * does that.
+ *
+ * Tools (FE-07): searchDriveFiles and deleteFile, defined in lib/ai/tools.ts.
+ * stopWhen lets the model take a follow-up step after a tool result comes
+ * back — without it, the model would call the tool, get the result, and
+ * stop instead of turning it into a reply.
  * ---------------------------------------------------------------------------
  */
 
-import { streamText, convertToModelMessages, type UIMessage } from "ai";
+import { streamText, convertToModelMessages, stepCountIs, type UIMessage } from "ai";
 import {
   CHAT_MODEL,
   CHAT_SYSTEM_PROMPT,
   CHAT_GENERATION_CONFIG,
 } from "@/lib/ai/config";
+import { tools } from "@/lib/ai/tools";
 
 // Lets this function stream for longer than Vercel's default serverless
 // timeout. Required for anything but the shortest replies.
@@ -41,6 +48,15 @@ export async function POST(req: Request) {
     system: CHAT_SYSTEM_PROMPT,
     messages: modelMessages,
     ...CHAT_GENERATION_CONFIG,
+
+    // Registers searchDriveFiles (auto-executing) and deleteFile
+    // (human-in-the-loop — no execute(), client confirms before it runs).
+    tools,
+
+    // Allows up to 5 steps total: the model can call a tool, receive the
+    // result, and generate a follow-up response using it, instead of
+    // stopping the moment the tool result comes back.
+    stopWhen: stepCountIs(5),
 
     // Ties the upstream Anthropic request to the incoming HTTP request's
     // signal. Without this, clicking "stop" on the client only stops the

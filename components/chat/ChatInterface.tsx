@@ -17,6 +17,10 @@
  * - Auto-scroll only pins to bottom while the user is already at the
  *   bottom. Scrolling up during a stream releases the pin permanently
  *   until they scroll back down or tap "Jump to latest".
+ * - message.parts can also include tool-* parts (FE-07): these render via
+ *   <ToolPart /> below each message's text bubble, one per tool call, each
+ *   showing its own input-streaming / input-available / output-available /
+ *   output-error state.
  * ---------------------------------------------------------------------------
  */
 
@@ -32,6 +36,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ToolPart } from "./ToolPart";
 
 // How close to the bottom (px) counts as "still at the bottom" for the
 // auto-scroll pin. Generous enough to survive sub-pixel scroll jitter.
@@ -102,7 +107,7 @@ function ThinkingIndicator() {
 }
 
 export default function ChatInterface() {
-  const { messages, sendMessage, status, stop, error, clearError } = useChat({
+  const { messages, sendMessage, status, stop, error, clearError, addToolResult } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
 
@@ -199,13 +204,22 @@ export default function ChatInterface() {
             .map((p) => (p.type === "text" ? p.text : ""))
             .join("");
           const isLast = i === messages.length - 1;
+          const toolParts = message.parts.filter((p) => p.type.startsWith("tool-"));
           return (
-            <MessageBubble
-              key={message.id}
-              role={message.role === "user" ? "user" : "assistant"}
-              text={text}
-              isStreaming={isLast && lastMessageIsStreamingAssistant}
-            />
+            <div key={message.id}>
+              <MessageBubble
+                role={message.role === "user" ? "user" : "assistant"}
+                text={text}
+                isStreaming={isLast && lastMessageIsStreamingAssistant}
+              />
+              {toolParts.map((part, j) => (
+                <ToolPart
+                  key={`${message.id}-tool-${j}`}
+                  part={part}
+                  addToolResult={addToolResult}
+                />
+              ))}
+            </div>
           );
         })}
 
