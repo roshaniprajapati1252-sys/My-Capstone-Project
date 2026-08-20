@@ -1,4 +1,5 @@
-﻿import dynamic from "next/dynamic";
+﻿"use client";
+import dynamic from "next/dynamic";
 
 const ChatInterface = dynamic(() => import("@/components/chat/ChatInterface"), {
   ssr: false,
