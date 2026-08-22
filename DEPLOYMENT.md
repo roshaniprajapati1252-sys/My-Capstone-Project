@@ -5,25 +5,25 @@
 - [x] `npx tsc --noEmit` passes with 0 errors
 - [x] `npx eslint .` passes with 0 errors
 - [x] `npm test` passes (11/11)
-- [ ] `npm run build` succeeds on Vercel (font fetch requires network Vercel's build servers have; can't be verified in a sandboxed environment — confirm on next deploy)
+- [x] `npm run build` succeeds on Vercel (confirmed live — app is deployed and working)
 - [x] `.env.local` is git-ignored; no secrets committed
-- [ ] `OPENROUTER_API_KEY` set in Vercel → Project Settings → Environment Variables (Key and Value are separate fields — don't paste `KEY=value` into one box)
-- [ ] Manual redeploy triggered after any env var change (Vercel does not auto-redeploy on env var edits)
+- [x] `OPENROUTER_API_KEY` set in Vercel → Project Settings → Environment Variables
+- [x] Manual redeploy triggered after any env var change
 
 ## Deploy
 
-- [ ] Push to `main`
-- [ ] Vercel auto-deploy triggers (or manual redeploy if only env vars changed)
-- [ ] Visit the live URL directly — click into the Dashboard, send a real message, confirm it streams
+- [x] Push to `main`
+- [x] Vercel auto-deploy triggers
+- [x] Visit the live URL directly — click into the Dashboard, send a real message, confirm it streams
 - [ ] Visit `/health` — confirm it returns `{ "status": "ok", ... }`
 
 ## Post-deploy verification
 
-- [ ] Send a message and confirm token-by-token streaming (not one big chunk)
+- [x] Send a message and confirm token-by-token streaming (not one big chunk)
 - [ ] Click Stop mid-response — confirm it stops cleanly and you can send again immediately
-- [ ] Trigger an error state (e.g. temporarily bad API key) — confirm the error banner shows and Dismiss works, rather than a blank screen or crash
-- [ ] Run Lighthouse (mobile) against the live URL — target 85+, aim for 90+
-- [ ] Run axe DevTools or WAVE against the live URL — record violations and fixes in `README.md`
+- [x] Trigger an error state — confirm the error banner shows and Dismiss works, rather than a blank screen or crash
+- [x] Run Lighthouse (mobile) against the live URL — target 85+, aim for 90+
+- [x] Run axe DevTools or WAVE against the live URL — record violations and fixes in `README.md`
 
 ## How it fails safely
 
