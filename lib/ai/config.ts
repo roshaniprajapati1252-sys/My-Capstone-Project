@@ -26,7 +26,7 @@ const openrouter = createOpenRouter({
  * to test without spending anything. Swap the string below to change
  * which model powers the whole app.
  */
-export const CHAT_MODEL = openrouter("meta-llama/llama-3.1-8b-instruct:free");
+export const CHAT_MODEL = openrouter("meta-llama/llama-3.1-8b-instruct");
 
 /**
  * SYSTEM PROMPT
